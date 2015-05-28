@@ -93,6 +93,11 @@ extern CGFloat const JTSImageViewController_DefaultBackgroundBlurRadius;
  */
 - (void)dismiss:(BOOL)animated;
 
+/**
+ Allows the image to zoom full screen. Must be called after a delay, to ensure the image has been properly loaded in the scrollView.
+ */
+- (void)zoomToRectFromRawPoint:(CGPoint)rawPoint inView:(UIView *)view;
+
 @end
 
 ///--------------------------------------------------------------------------------------------------------------------

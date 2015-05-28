@@ -1624,14 +1624,9 @@ typedef struct {
 
 #pragma mark - Gesture Recognizer Actions
 
-- (void)imageDoubleTapped:(UITapGestureRecognizer *)sender {
+- (void)zoomToRectFromRawPoint:(CGPoint)rawPoint inView:(UIView *)view {
     
-    if (_flags.scrollViewIsAnimatingAZoom) {
-        return;
-    }
-    
-    CGPoint rawLocation = [sender locationInView:sender.view];
-    CGPoint point = [self.scrollView convertPoint:rawLocation fromView:sender.view];
+    CGPoint point = [self.scrollView convertPoint:rawPoint fromView:view];
     CGRect targetZoomRect;
     UIEdgeInsets targetInsets;
     if (self.scrollView.zoomScale == 1.0f) {
@@ -1658,6 +1653,16 @@ typedef struct {
     }];
     [self.scrollView zoomToRect:targetZoomRect animated:YES];
     [CATransaction commit];
+}
+
+- (void)imageDoubleTapped:(UITapGestureRecognizer *)sender {
+    
+    if (_flags.scrollViewIsAnimatingAZoom) {
+        return;
+    }
+    
+    CGPoint rawLocation = [sender locationInView:sender.view];
+    [self zoomToRectFromRawPoint:rawLocation inView:sender.view];
 }
 
 - (void)imageSingleTapped:(id)sender {
